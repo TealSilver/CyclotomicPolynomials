@@ -15,7 +15,7 @@ module Polynomial (Polynomial,
 
 newtype Polynomial a = Polynomial [a]
 
-listPoly :: (Num a, Eq a) => [a] -> Polynomial a
+listPoly :: (Num a, Eq a) => [a] -> Polynomial a -- use this, not the constructor, to eliminate trailing zeros
 listPoly = Polynomial . zeroReduce
 
 toList :: Polynomial a -> [a]
@@ -46,7 +46,7 @@ polyDivRem n d = polyDivRem' zeroPoly n
     where
     polyDivRem' q r 
         | degree d > degree r = (q, r)
-        | otherwise = polyDivRem' (q + t) (r - (t * d))
+        | otherwise           = polyDivRem' (q + t) (r - (t * d))
         where
             t = listPoly $ replicate (degree r - degree d) 0 ++ [lead r / lead d]
 
@@ -55,7 +55,7 @@ polyDivInt n d = polyDivInt' zeroPoly n
     where
     polyDivInt' q r 
         | degree d > degree r = q
-        | otherwise = polyDivInt' (q + t) (r - (t * d))
+        | otherwise           = polyDivInt' (q + t) (r - (t * d))
         where
             t = listPoly $ replicate (degree r - degree d) 0 ++ [lead r `div` lead d]
 
@@ -109,7 +109,7 @@ instance (Num a, Eq a, Show a, Ord a) => Show (Polynomial a) where
         [] -> "0"
         _  -> shaveOpp $ unwords $ reverse terms
         where
-        terms = [ showTerm c i | (c, i) <- zip p ([0..] :: [Integer]), c /= 0 ]
+        terms = [showTerm c i | (c, i) <- zip p ([0..] :: [Integer]), c /= 0]
         showTerm c 0 = if c > 0 then "+ " ++ show c else "- " ++ tail (show c)
         showTerm 1 1 = "+ x"
         showTerm (-1) 1 = "- x"

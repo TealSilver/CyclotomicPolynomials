@@ -14,7 +14,7 @@ isqrt :: Integral a => a -> a
 isqrt = floor . sqrt . fromIntegral
 
 isPrime :: Integral a => a -> Bool
-isPrime n = (n > 1) && null [ a | a <- [2..isqrt n], a `isFactorOf` n]
+isPrime n = (abs n > 1) && null [ a | a <- [2..isqrt (abs n)], a `isFactorOf` abs n]
 
 primeFactors :: Integral a => a -> [a]
 primeFactors n

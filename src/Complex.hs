@@ -3,8 +3,11 @@ module Complex where
 
 newtype Complex a = Complex (a, a) deriving Eq
 
-toComplex :: Num a => (a, a) -> Complex a
+toComplex :: Num a => (a, a) -> Complex a -- idk if I need this, just use the constructor or something
 toComplex (x, y) = Complex (x, y)
+
+i :: Num a => Complex a
+i = Complex (0, 1)
 
 re :: Complex a -> a
 re (Complex (x, _)) = x
@@ -29,15 +32,6 @@ toPolar z = (modulus z, arg z)
 
 fromPolar :: RealFloat a => (a, a) -> Complex a
 fromPolar (r, t) = Complex (r * cos t, r * sin t)
-
-unityRoots :: RealFloat a => Int -> [Complex a]
-unityRoots n 
-    | n < 1     = []
-    | otherwise = cc n
-    where 
-        x    = Complex (cos (2 * pi / fromIntegral n), sin (2 * pi / fromIntegral n))
-        cc 0 = []
-        cc m = x ^ (n - m) : cc (m - 1)
 
 instance Num a => Num (Complex a) where
     (+) :: Num a => Complex a -> Complex a -> Complex a
@@ -83,22 +77,22 @@ instance RealFloat a => Floating (Complex a) where
     cos (Complex (x, y)) = Complex (cos x * cosh y, -(sin x * sinh y))
 
     asin :: RealFloat a => Complex a -> Complex a
-    asin z = Complex (0, -1) * log (sqrt (1 - (z * z)) + (Complex (0, 1) * z))
+    asin z = (-i) * log (sqrt (1 - (z * z)) + (i * z))
 
     acos :: RealFloat a => Complex a -> Complex a
-    acos z = Complex (0, -1) * log (Complex (0, 1) * sqrt (1 - (z * z)) + z)
+    acos z = (-i) * log (i * sqrt (1 - (z * z)) + z)
 
     atan :: RealFloat a => Complex a -> Complex a
-    atan z = Complex (0, -0.5) * log ((Complex (0, 1) - z) / (Complex (0, 1) + z))
+    atan z = (i / (-2)) * log ((i - z) / (i + z))
 
     sinh :: Floating a => Complex a -> Complex a
-    sinh z = Complex (0, -1) * sin (Complex (0, 1) * z)
+    sinh z = (-i) * sin (i * z)
 
     cosh :: Floating a => Complex a -> Complex a
-    cosh z = cos (Complex (0, 1) * z)
+    cosh z = cos (i * z)
 
     tanh :: Floating a => Complex a -> Complex a
-    tanh z = Complex (0, -1) * tan (Complex (0, 1) * z)
+    tanh z = (-i) * tan (i * z)
 
     asinh :: RealFloat a => Complex a -> Complex a
     asinh z = log $ z + sqrt (z * z + 1)
@@ -120,9 +114,9 @@ instance Functor Complex where
     fmap f (Complex (x, y)) = Complex (f x, f y)
 
 instance Applicative Complex where
-    pure :: a -> Complex a
+    pure :: a -> Complex a -- kinda useless tbh
     pure x = Complex (x, x)
-    
+
     (<*>) :: Complex (a -> b) -> Complex a -> Complex b
     (<*>) (Complex (f, g)) (Complex (x, y)) = Complex (f x, g y)
 

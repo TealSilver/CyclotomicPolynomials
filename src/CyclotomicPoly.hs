@@ -1,5 +1,15 @@
 import Polynomial
 import Factorize
+import Complex
+
+unityRoots :: RealFloat a => Int -> [Complex a]
+unityRoots n
+    | n < 1     = []
+    | otherwise = cc n
+    where
+        x    = Complex (cos (2 * pi / fromIntegral n), sin (2 * pi / fromIntegral n))
+        cc 0 = []
+        cc m = x ^ (n - m) : cc (m - 1)
 
 cycloPolyGen :: (Integral a) => Int -> Polynomial a
 cycloPolyGen n
