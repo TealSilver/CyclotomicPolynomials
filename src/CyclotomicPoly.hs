@@ -1,5 +1,5 @@
 import Polynomial
-import Factorize
+import NumberTheory
 import Complex
 
 unityRoots :: RealFloat a => Int -> [Complex a]

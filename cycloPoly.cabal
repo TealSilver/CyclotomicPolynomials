@@ -60,7 +60,7 @@ library
 
     -- Modules exported by the library.
     exposed-modules:  Polynomial,
-                      Factorize,
+                      NumberTheory,
                       CyclotomicPoly,
                       Complex,
                       GaussianInteger

@@ -1,7 +1,7 @@
 {-# LANGUAGE InstanceSigs #-}
 module GaussianInteger where
 
-import Factorize
+import NumberTheory
 
 newtype GaussInt a = GaussInt (a, a) deriving Eq
 
