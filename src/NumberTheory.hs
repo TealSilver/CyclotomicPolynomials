@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# OPTIONS_GHC -Wno-type-defaults #-}
-module Factorize where
+module NumberTheory where
 
 isFactorOf :: Integral a => a -> a -> Bool
 isFactorOf a n = n `mod` a == 0
