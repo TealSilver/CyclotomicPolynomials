@@ -26,6 +26,9 @@ isGaussPrime z@(GaussInt (a, b)) = case (a, b) of
     (0, _) -> isPrime b && abs b `mod` 4 == 3
     (_, _) -> isPrime $ norm z
 
+gaussPrimes :: Integral a => a -> [GaussInt a]
+gaussPrimes r = filter isGaussPrime [GaussInt (a, b) | a <- [-r..r], b <- [-r..r]]
+
 instance (Num a) => Num (GaussInt a) where
     (+) :: Num a => GaussInt a -> GaussInt a -> GaussInt a
     (+) (GaussInt (a, b)) (GaussInt (c, d)) = GaussInt (a + c, b + d)
@@ -47,6 +50,8 @@ instance (Num a) => Num (GaussInt a) where
 
 instance (Show a, Num a, Ord a) => Show (GaussInt a) where
     show :: Show a => GaussInt a -> String
-    show (GaussInt (a, b)) = if b >= 0
-                            then show a ++ " + " ++ show b ++ "i"
-                            else show a ++ " - " ++ tail (show b) ++ "i"
+    show (GaussInt (a, b))
+        | b == 1    = show a ++ " + i"
+        | b == -1   = show a ++ " - i"
+        | b >= 0    = show a ++ " + " ++ show b ++ "i"
+        | otherwise = show a ++ " - " ++ tail (show b) ++ "i"
