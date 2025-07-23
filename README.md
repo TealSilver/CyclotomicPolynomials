@@ -1,0 +1,2 @@
+# Cyclopoly
+Originally a project for a cyclotomic polynomial generator written in Haskell because why not, but it has since turned into anything related to algebra and whatnot that I want to add such as Gaussian Integers and some number theory stuff. This is all just for fun beacuse math is fun!
